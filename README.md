@@ -15,5 +15,5 @@ Operations :
 
 Demo Link : https://notes-application-redux.netlify.app
 
-Login username : admin
-Login password : abc123
+- Login username : admin
+- Login password : abc123
