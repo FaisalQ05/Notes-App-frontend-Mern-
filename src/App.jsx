@@ -16,6 +16,7 @@ import NewUser from "./features/users/NewUser"
 import UsersList from "./features/users/UsersList"
 import useTitle from "./hooks/useTitle"
 import IsUserLoggedIn from "./features/auth/IsUserLoggedIn"
+import ProtectDashboadRoutes from "./features/auth/ProtectDashboadRoutes"
 
 const App = () => {
   useTitle("Notes App")
@@ -36,27 +37,30 @@ const App = () => {
             />
             <Route path="login" element={<Login />} />
           </Route>
-          <Route
-            element={<RequireAuth allowedRoles={[...Object.values(ROLES)]} />}
-          >
-            <Route path="dash" element={<DashLayout />}>
-              <Route index element={<Welcome />} />
 
-              <Route path="notes">
-                <Route index element={<NotesList />} />
-                <Route path=":id" element={<EditNote />} />
-                <Route path="new" element={<NewNote />} />
-              </Route>
+          <Route element={<ProtectDashboadRoutes />}>
+            <Route
+              element={<RequireAuth allowedRoles={[...Object.values(ROLES)]} />}
+            >
+              <Route path="dash" element={<DashLayout />}>
+                <Route index element={<Welcome />} />
 
-              <Route
-                element={
-                  <RequireAuth allowedRoles={[ROLES.Admin, ROLES.Manager]} />
-                }
-              >
-                <Route path="users">
-                  <Route index element={<UsersList />} />
-                  <Route path=":id" element={<EditUser />} />
-                  <Route path="new" element={<NewUser />} />
+                <Route path="notes">
+                  <Route index element={<NotesList />} />
+                  <Route path=":id" element={<EditNote />} />
+                  <Route path="new" element={<NewNote />} />
+                </Route>
+
+                <Route
+                  element={
+                    <RequireAuth allowedRoles={[ROLES.Admin, ROLES.Manager]} />
+                  }
+                >
+                  <Route path="users">
+                    <Route index element={<UsersList />} />
+                    <Route path=":id" element={<EditUser />} />
+                    <Route path="new" element={<NewUser />} />
+                  </Route>
                 </Route>
               </Route>
             </Route>

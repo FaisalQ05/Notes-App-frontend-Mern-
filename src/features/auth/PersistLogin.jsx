@@ -38,9 +38,11 @@ const PersistLogin = () => {
     }
   }, [])
 
+  console.log("persist")
+
   let content
   if (!persist) {
-    // console.log("not persist")
+    console.log("not persist")
     content = <Outlet />
   } else if (isLoading) {
     // console.log("refresh loading")
@@ -50,17 +52,17 @@ const PersistLogin = () => {
       </div>
     )
   } else if (isError) {
-    // console.log("is", error)
+    console.log("is", error)
     let errorMessage
     // errorMessage = error?.status === 401 ? 'Back to Login' : error?.data?.message
     // console.log("refresh error")
     // content = <div className='bg-gray-900 h-screen w-full text-white p-3 text-base  md:text-2xl'>{error.status === 'FETCH_ERROR' ? errorMessage : <Link to='/login' className='text-blue-300 hover:text-gray-400'>{errorMessage}</Link>}</div>
     content = <Outlet context={error} />
   } else if (isSuccess && istrueSuccess) {
-    // console.log("refresh success")
-    content = <Outlet />
+    console.log("refresh success")
+    content = <Outlet context={null} />
   } else if (token && isUninitialized) {
-    // console.log("have token and query isUninitialized")
+    console.log("have token and query isUninitialized")
     content = <Outlet />
   }
   return content
