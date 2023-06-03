@@ -9,13 +9,13 @@ const ProtectDashboadRoutes = ({ redirect = "/login", children }) => {
   const context = useOutletContext()
   const token = useSelector(selectCurrentToken)
   const [persist] = usePersist()
-  console.log("ProtectRouteNonPersist")
+  // console.log("ProtectRouteNonPersist")
   if (persist && context?.status === 401 && !token) {
-    console.log("Condition one")
+    // console.log("Condition one")
     return <Navigate to={redirect} replace />
   }
   if (!persist && !token) {
-    console.log("Condition two")
+    // console.log("Condition two")
     return <Navigate to={redirect} replace />
   }
 
