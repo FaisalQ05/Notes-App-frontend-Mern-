@@ -3,7 +3,7 @@ import { setCredentials } from "../../features/auth/authSlice"
 
 const baseQuery = fetchBaseQuery({
   baseUrl:
-    "https://notes-app-backend-mern-git-production-faisalqureshi05.vercel.app",
+    "https://notes-app-backend-mern.vercel.app",
   //   baseUrl: "http://localhost:3500",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
