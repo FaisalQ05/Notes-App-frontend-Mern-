@@ -34,7 +34,7 @@ const authApiSlice = apiSlice.injectEndpoints({
                 method: 'GET'
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                
+                console.log("******************** refresh mutation")
                 try {
                     const { data } = await queryFulfilled
                     const { accessToken } = data

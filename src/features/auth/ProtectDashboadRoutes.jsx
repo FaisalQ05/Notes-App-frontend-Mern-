@@ -9,7 +9,8 @@ const ProtectDashboadRoutes = ({ redirect = "/login", children }) => {
   const context = useOutletContext()
   const token = useSelector(selectCurrentToken)
   const [persist] = usePersist()
-  console.log("ProtectRouteNonPersist")
+  console.log("Protect dash")
+  console.log("Protect dash error : ", context)
   if (persist && context?.status === 401 && !token) {
     console.log("Condition one")
     return <Navigate to={redirect} replace />
@@ -18,7 +19,7 @@ const ProtectDashboadRoutes = ({ redirect = "/login", children }) => {
     console.log("Condition two")
     return <Navigate to={redirect} replace />
   }
-
+  console.log("Protect dash Outlet")
   //   console.log("outlet ",children)
   //   console.log("outlet ",Outlet)
   return <Outlet />

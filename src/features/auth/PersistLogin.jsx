@@ -22,6 +22,7 @@ const PersistLogin = () => {
       const verifyRefreshToken = async () => {
         try {
           await refresh()
+          console.log("persist ehre *************************")
           setTrueSuccess(true)
         } catch (e) {
           console.log("Refresh error : ", e)
@@ -29,16 +30,19 @@ const PersistLogin = () => {
       }
 
       if (!token && persist) {
+        console.log("token verififcation refresh")
         verifyRefreshToken()
       }
     }
 
     return () => {
       effectRan.current = true
+      setTrueSuccess(false)
+      console.log("unmount persist")
     }
   }, [])
 
-  console.log("persist")
+  console.log("persist", { token, isSuccess, isError })
 
   let content
   if (!persist) {
@@ -52,17 +56,17 @@ const PersistLogin = () => {
       </div>
     )
   } else if (isError) {
-    console.log("is", error)
-    let errorMessage
+    console.log("persist error", error)
+    // let errorMessage
     // errorMessage = error?.status === 401 ? 'Back to Login' : error?.data?.message
     // console.log("refresh error")
     // content = <div className='bg-gray-900 h-screen w-full text-white p-3 text-base  md:text-2xl'>{error.status === 'FETCH_ERROR' ? errorMessage : <Link to='/login' className='text-blue-300 hover:text-gray-400'>{errorMessage}</Link>}</div>
     content = <Outlet context={error} />
   } else if (isSuccess && istrueSuccess) {
-    console.log("refresh success")
+    console.log("persist refresh success", { token })
     content = <Outlet context={null} />
   } else if (token && isUninitialized) {
-    console.log("have token and query isUninitialized")
+    console.log("persist have token and query isUninitialized")
     content = <Outlet />
   }
   return content

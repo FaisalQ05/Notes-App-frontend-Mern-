@@ -1,5 +1,5 @@
 import React from "react"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import DashLayout from "./components/DashLayout"
 import Layout from "./components/Layout"
 import Public from "./components/Public"
@@ -17,6 +17,16 @@ import UsersList from "./features/users/UsersList"
 import useTitle from "./hooks/useTitle"
 import IsUserLoggedIn from "./features/auth/IsUserLoggedIn"
 import ProtectDashboadRoutes from "./features/auth/ProtectDashboadRoutes"
+import { selectCurrentToken } from "./features/auth/authSlice"
+import { useSelector } from "react-redux"
+import RedirectToLogin from "./features/auth/RedirectToLogin"
+import RedirectToDashboard from "./features/auth/RedirectToDashboard"
+
+const RedirectLoggedInUser = () => {
+  const token = useSelector(selectCurrentToken)
+
+  return token ? <Navigate to="/dash" /> : null
+}
 
 const App = () => {
   useTitle("Notes App")
@@ -24,18 +34,21 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Public />} />
-
+        {/* <Route path="*" element={<Login />} /> */}
+        {/* <Route path="/" element={<Login />} /> */}
         <Route element={<PersistLogin />}>
-          <Route element={<IsUserLoggedIn />}>
-            <Route
-              path="*"
-              element={
-                <IsUserLoggedIn>
-                  <Login />
-                </IsUserLoggedIn>
-              }
-            />
-            <Route path="login" element={<Login />} />
+          <Route element={<RedirectToDashboard />}>
+            <Route element={<RedirectToLogin />}>
+              <Route
+                path="*"
+                element={
+                  <RedirectToLogin>
+                    <Login />
+                  </RedirectToLogin>
+                }
+              />
+              <Route path="login" element={<Login />} />
+            </Route>
           </Route>
 
           <Route element={<ProtectDashboadRoutes />}>

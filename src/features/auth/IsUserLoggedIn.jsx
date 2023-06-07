@@ -5,15 +5,15 @@ import { Navigate, Outlet } from "react-router-dom"
 
 const IsUserLoggedIn = ({ redirect = "/dash", children }) => {
   const token = useSelector(selectCurrentToken)
-  
-  console.log("Is use log in ",token)
+
+  console.log("Is use log in Component Token :  ", token)
   if (token) {
-    console.log("Condition one")
+    console.log("Condition one if user have token redirect to dashboard")
     return <Navigate to={redirect} replace />
   }
   if (children) {
     console.log("Condition two")
-    return <Navigate to={"login"} replace />
+    return <Navigate to={"/login"} replace />
   } else {
     console.log("Condition three")
     return <Outlet />
